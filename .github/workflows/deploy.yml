@@ -24,12 +24,13 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy to Hostinger via SSH
+        uses: easingthemes/ssh-deploy@v5.1.0
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ./public_html/
-          dangerous-clean-slate: false
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USERNAME }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
+          SOURCE: "dist/"
+          TARGET: "/home/u123456789/domains/yourdomain.com/public_html/"
+          ARGS: "-rlgoDzvc -i --delete"
