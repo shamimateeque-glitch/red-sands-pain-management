@@ -24,13 +24,11 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to Hostinger via SSH
-        uses: easingthemes/ssh-deploy@v5.1.0
+      - name: Deploy to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: 145.223.77.200
-          REMOTE_USER: u810413435
-          REMOTE_PORT: "65002"
-          SOURCE: "dist/"
-          TARGET: "/home/u810413435/domains/redsandspm.com/public_html/"
-          ARGS: "-rlgoDzvc -i --delete"
+          server: 145.223.77.200
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ./domains/redsandspm.com/public_html/
