@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find 'C:/Users/Erum/Documents/Final version02 Kamram website/red-sand-healing-hub-main/src' -type f \\\\\\(-name *.tsx -o -name *.ts -o -name *.css \\\\\\))",
+      "Bash(find 'C:/Users/Erum/Documents/Final version02 Kamram website/red-sand-healing-hub-main' -maxdepth 1 -type f \\\\\\(-name *.md -o -name tsconfig.json -o -name .env* \\\\\\))",
+      "Bash(find 'C:/Users/Erum/Documents/Final version02 Kamram website/red-sand-healing-hub-main/supabase/migrations' -type f -name *.sql)",
+      "Bash(echo \"EXIT:$?\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(find . -name *.sql -o -name *migration*)",
+      "Bash(grep -l \"display_order\" supabase/migrations/*.sql)",
+      "Bash(npx tsc:*)",
+      "Bash(gh auth:*)",
+      "Bash(git --version)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

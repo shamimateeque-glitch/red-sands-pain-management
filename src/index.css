@@ -1,0 +1,335 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-padding-top: 6rem;
+}
+
+@keyframes grow-width {
+  from { width: 0; }
+  to { width: 5rem; }
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(0 38% 42% / 0.4); }
+  50% { box-shadow: 0 0 0 8px hsl(0 38% 42% / 0); }
+}
+
+@layer components {
+  .pattern-bg {
+    background-color: hsl(0 0% 97%);
+    background-image: radial-gradient(circle, hsl(0 38% 42% / 0.18) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+
+  /* About section subtle pattern overlay */
+  .about-pattern {
+    background-image: radial-gradient(circle, hsl(0 0% 100% / 0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Nav link hover underline slide-in */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: hsl(var(--primary));
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+}
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 20%;
+
+    --primary: 0 38% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 90 13% 35%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 90 10% 95%;
+    --muted-foreground: 90 5% 45%;
+
+    --accent: 90 15% 88%;
+    --accent-foreground: 0 0% 20%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 90 10% 90%;
+    --input: 90 10% 90%;
+    --ring: 0 38% 42%;
+
+    --radius: 0.5rem;
+    
+    --maroon: 0 38.3% 42%;
+    --maroon-foreground: 0 0% 100%;
+    
+    --medical-light: 90 15% 95%;
+    --medical-dark: 0 38% 35%;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 0 0% 10%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 14%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 14%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 38% 52%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 90 13% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 90 10% 20%;
+    --muted-foreground: 90 5% 70%;
+
+    --accent: 90 15% 25%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 90 8% 25%;
+    --input: 90 8% 25%;
+    --ring: 0 38% 52%;
+    
+    --maroon: 0 38.3% 52%;
+    --maroon-foreground: 0 0% 100%;
+    
+    --medical-light: 90 15% 22%;
+    --medical-dark: 0 38% 48%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  h1, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight text-secondary;
+  }
+  
+  h2 {
+    @apply font-semibold tracking-tight text-3xl md:text-4xl;
+    color: hsl(var(--maroon));
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl;
+  }
+
+  /* Ensure bullets and numbers are visible in editor and content */
+  .prose ul,
+  .ProseMirror ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose ol,
+  .ProseMirror ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Benefits lists styling - Green checkmarks */
+  .prose ul.benefits-list,
+  .ProseMirror ul.benefits-list,
+  ul.benefits-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .prose ul.benefits-list li,
+  .ProseMirror ul.benefits-list li,
+  ul.benefits-list li {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .prose ul.benefits-list li::before,
+  .ProseMirror ul.benefits-list li::before,
+  ul.benefits-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #22c55e;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  /* Requirements lists styling - Blue info icons */
+  .prose ul.requirements-list,
+  .ProseMirror ul.requirements-list,
+  ul.requirements-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .prose ul.requirements-list li,
+  .ProseMirror ul.requirements-list li,
+  ul.requirements-list li {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .prose ul.requirements-list li::before,
+  .ProseMirror ul.requirements-list li::before,
+  ul.requirements-list li::before {
+    content: "ℹ";
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  /* Steps lists styling - Purple arrows */
+  .prose ul.steps-list,
+  .ProseMirror ul.steps-list,
+  ul.steps-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .prose ul.steps-list li,
+  .ProseMirror ul.steps-list li,
+  ul.steps-list li {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .prose ul.steps-list li::before,
+  .ProseMirror ul.steps-list li::before,
+  ul.steps-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #a855f7;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  /* Warnings lists styling - Amber warning icons */
+  .prose ul.warnings-list,
+  .ProseMirror ul.warnings-list,
+  ul.warnings-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .prose ul.warnings-list li,
+  .ProseMirror ul.warnings-list li,
+  ul.warnings-list li {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .prose ul.warnings-list li::before,
+  .ProseMirror ul.warnings-list li::before,
+  ul.warnings-list li::before {
+    content: "⚠";
+    position: absolute;
+    left: 0;
+    color: #f59e0b;
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  /* TipTap text alignment support inside the rich text editor */
+  .ProseMirror p[data-text-align="left"],
+  .ProseMirror h1[data-text-align="left"],
+  .ProseMirror h2[data-text-align="left"],
+  .ProseMirror h3[data-text-align="left"],
+  .ProseMirror li[data-text-align="left"] {
+    text-align: left;
+  }
+
+  .ProseMirror p[data-text-align="center"],
+  .ProseMirror h1[data-text-align="center"],
+  .ProseMirror h2[data-text-align="center"],
+  .ProseMirror h3[data-text-align="center"],
+  .ProseMirror li[data-text-align="center"] {
+    text-align: center;
+  }
+
+  .ProseMirror p[data-text-align="right"],
+  .ProseMirror h1[data-text-align="right"],
+  .ProseMirror h2[data-text-align="right"],
+  .ProseMirror h3[data-text-align="right"],
+  .ProseMirror li[data-text-align="right"] {
+    text-align: right;
+  }
+}
+

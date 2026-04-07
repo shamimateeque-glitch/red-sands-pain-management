@@ -1,0 +1,4 @@
+project_id = "zidstpdifzldgrnjkxwh"
+
+[functions.generate-treatment-icon]
+verify_jwt = false
