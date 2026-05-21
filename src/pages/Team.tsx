@@ -318,7 +318,7 @@ const Team = () => {
                 <div className="absolute -left-3 top-3 bottom-3 w-1.5 bg-primary rounded-full hidden md:block" />
                 <div className="absolute -bottom-3 -left-3 w-full h-full rounded-xl bg-primary/10 hidden md:block" />
                 <img
-                  src="/team/office-reception.png"
+                  src="/team-photos/office-reception.png"
                   alt="Red Sands Pain Management reception"
                   className="rounded-xl shadow-2xl w-full relative z-10 aspect-[3/2] object-cover max-h-[360px]"
                 />
