@@ -286,6 +286,9 @@ const Team = () => {
       setActive(found);
       // Make sure the filter doesn't hide the source card behind the modal
       setFilter("All");
+      // Reset scroll position so the modal opens against a clean top-of-page
+      // background, not partway down (carries over from previous page scroll).
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
     }
   }, [hash]);
 

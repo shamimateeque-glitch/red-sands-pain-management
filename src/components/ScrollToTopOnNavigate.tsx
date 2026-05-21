@@ -51,6 +51,12 @@ const ScrollToTopOnNavigate = () => {
       if (attempts++ < MAX_ATTEMPTS) {
         const t = window.setTimeout(tryScroll, 50);
         timers.push(t);
+      } else {
+        // Element never appeared — fall back to scrolling to top so the
+        // user doesn't get left at the previous page's scroll position.
+        // (This covers e.g. /team#<slug> which opens a modal instead of
+        // scrolling to an element.)
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
       }
     };
 
