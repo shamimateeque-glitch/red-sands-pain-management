@@ -32,3 +32,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: ./
+          # One-shot reset to clear stale sync state after public/team
+          # folder rename. Remove this flag in the follow-up commit so
+          # future deploys are incremental again.
+          dangerous-clean-slate: true
