@@ -6,6 +6,11 @@ html {
   scroll-padding-top: 6rem;
 }
 
+/* Offset anchor targets so the sticky nav doesn't cover them when scrolled into view. */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
 @keyframes grow-width {
   from { width: 0; }
   to { width: 5rem; }

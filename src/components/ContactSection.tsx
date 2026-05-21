@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const ContactSection = () => {
@@ -14,7 +14,7 @@ const ContactSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card>
             <CardHeader>
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-2">
@@ -25,6 +25,20 @@ const ContactSection = () => {
             <CardContent>
               <a href="tel:+17823777813" className="text-primary hover:underline font-medium">
                 +1 782-377-7813
+              </a>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-2">
+                <Printer className="h-6 w-6 text-primary" />
+              </div>
+              <CardTitle>Fax</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <a href="tel:+19022001286" className="text-primary hover:underline font-medium">
+                902-200-1286
               </a>
             </CardContent>
           </Card>

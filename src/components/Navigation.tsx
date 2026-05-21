@@ -96,6 +96,7 @@ const Navigation = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/#about" },
+    { name: "Team", path: "/team" },
   ];
 
   const navLinkClass = (path: string) =>
@@ -172,7 +173,7 @@ const Navigation = () => {
                 </a>
               </div>
             </div>
-            {/* General Information Dropdown */}
+            {/* FAQs Dropdown */}
             <div className="relative" ref={generalInfoRef}>
               <button
                 onClick={() => setIsGeneralInfoOpen(!isGeneralInfoOpen)}
@@ -180,7 +181,7 @@ const Navigation = () => {
                   isGeneralInfoOpen ? "text-primary" : "text-foreground hover:text-primary"
                 }`}
               >
-                General Information
+                FAQs
                 <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isGeneralInfoOpen ? 'rotate-180' : ''}`} />
                 {isGeneralInfoOpen && (
                   <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full" />
@@ -297,13 +298,13 @@ const Navigation = () => {
                 </div>
               </div>
             </div>
-            {/* Mobile General Information */}
+            {/* Mobile FAQs */}
             <div>
               <button
                 onClick={() => setIsMobileGeneralInfoOpen(!isMobileGeneralInfoOpen)}
                 className="flex items-center justify-between w-full py-2.5 px-3 rounded-lg text-sm font-medium tracking-wide text-foreground hover:text-primary hover:bg-muted/60 transition-colors"
               >
-                General Information
+                FAQs
                 <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isMobileGeneralInfoOpen ? 'rotate-180' : ''}`} />
               </button>
               <div

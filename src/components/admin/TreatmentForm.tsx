@@ -310,7 +310,7 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
               <SelectContent>
                 <SelectItem value="covered">Covered Service</SelectItem>
                 <SelectItem value="private_pay">Private Pay Service</SelectItem>
-                <SelectItem value="general_information">General Information</SelectItem>
+                <SelectItem value="general_information">FAQs</SelectItem>
               </SelectContent>
             </Select>
           </div>

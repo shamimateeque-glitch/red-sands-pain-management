@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Red Sands Pain Management — Website Change Log</title>
+<style>
+  :root {
+    --maroon: #7a2b2b;
+    --maroon-light: #f3e6e6;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent-bg: #fafaf7;
+  }
+
+  @page {
+    size: letter;
+    margin: 0.75in 0.85in;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+
+  body { padding: 0; }
+
+  h1.cover-title {
+    color: var(--maroon);
+    font-size: 26pt;
+    margin: 0 0 4pt 0;
+    letter-spacing: -0.5pt;
+  }
+
+  p.cover-subtitle {
+    color: var(--muted);
+    font-size: 12pt;
+    margin: 0 0 16pt 0;
+  }
+
+  table.meta {
+    border-collapse: collapse;
+    margin-bottom: 14pt;
+    font-size: 10pt;
+  }
+  table.meta td {
+    padding: 4pt 12pt 4pt 0;
+    vertical-align: top;
+  }
+  table.meta td.label {
+    color: var(--maroon);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  hr.divider {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 14pt 0;
+  }
+
+  h2.section {
+    color: var(--maroon);
+    font-size: 15pt;
+    margin: 22pt 0 4pt 0;
+    page-break-after: avoid;
+  }
+
+  p.section-time {
+    color: var(--maroon);
+    font-size: 9pt;
+    font-weight: 600;
+    margin: 0 0 10pt 0;
+    text-transform: uppercase;
+    letter-spacing: 0.6pt;
+  }
+
+  h3.task {
+    font-size: 11.5pt;
+    margin: 12pt 0 4pt 0;
+    color: var(--text);
+    page-break-after: avoid;
+  }
+  h3.task .hours {
+    color: var(--maroon);
+    font-weight: 600;
+    font-size: 10pt;
+    margin-left: 6pt;
+  }
+
+  p.body, ul.bullets { margin: 0 0 8pt 0; }
+  ul.bullets {
+    padding-left: 18pt;
+    margin-top: 2pt;
+  }
+  ul.bullets li {
+    margin-bottom: 3pt;
+  }
+
+  .stats {
+    border: 1px solid var(--border);
+    border-radius: 6pt;
+    background: var(--accent-bg);
+    padding: 12pt 14pt;
+    margin: 6pt 0 12pt 0;
+  }
+  .stats table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .stats td {
+    padding: 5pt 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 10pt;
+  }
+  .stats tr:last-child td { border-bottom: none; }
+  .stats td.label {
+    color: var(--maroon);
+    font-weight: 600;
+    width: 40%;
+  }
+
+  table.summary {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4pt 0 14pt 0;
+    font-size: 10pt;
+  }
+  table.summary thead th {
+    background: var(--maroon);
+    color: #fff;
+    text-align: left;
+    padding: 8pt 10pt;
+    font-weight: 600;
+  }
+  table.summary thead th:last-child { text-align: right; }
+  table.summary tbody td {
+    padding: 7pt 10pt;
+    border-bottom: 1px solid var(--border);
+  }
+  table.summary tbody td:last-child { text-align: right; }
+  table.summary tbody tr:nth-child(even) td { background: var(--accent-bg); }
+  table.summary tfoot td {
+    padding: 9pt 10pt;
+    background: var(--maroon-light);
+    color: var(--maroon);
+    font-weight: 700;
+    border-top: 1.5pt solid var(--maroon);
+  }
+  table.summary tfoot td:last-child { text-align: right; }
+
+  .page-break { page-break-before: always; }
+
+  footer.doc-footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 8.5pt;
+    font-style: italic;
+    margin-top: 20pt;
+    border-top: 1px solid var(--border);
+    padding-top: 10pt;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="cover-title">Red Sands Pain Management</h1>
+<p class="cover-subtitle">Website Development &mdash; Change Log &amp; Time Breakdown</p>
+
+<table class="meta">
+  <tr><td class="label">Project:</td><td>Red Sands Pain Management website (redsandspm.com)</td></tr>
+  <tr><td class="label">Period:</td><td>May 2026</td></tr>
+  <tr><td class="label">Prepared for:</td><td>Client review</td></tr>
+  <tr><td class="label">Document:</td><td>Summary of features added, refinements, and bug fixes</td></tr>
+</table>
+
+<hr class="divider" />
+
+<h2 class="section">Executive Summary</h2>
+<p class="body">
+  This document summarizes the recent round of development work delivered on the Red Sands Pain
+  Management website. Work covered six areas: a new Team page (the largest item), navigation
+  and footer redesign, the addition of fax contact information, photo management, and several
+  UX bug fixes. All changes were tested in development and are ready for production deployment.
+</p>
+
+<div class="stats">
+  <table>
+    <tr><td class="label">Total estimated effort</td><td>12.25 hours</td></tr>
+    <tr><td class="label">New pages added</td><td>1 (Team page at /team)</td></tr>
+    <tr><td class="label">New components</td><td>3 (Team section, Team page, Scroll handler)</td></tr>
+    <tr><td class="label">Pages modified</td><td>Home, Footer, Navigation, Admin form</td></tr>
+    <tr><td class="label">Bug fixes</td><td>3 (scroll position, hash anchors, photo crop)</td></tr>
+  </table>
+</div>
+
+<!-- 1 -->
+<h2 class="section">1. Navigation Updates</h2>
+<p class="section-time">Estimated effort: 0.5 hours</p>
+
+<h3 class="task">Renamed &ldquo;General Information&rdquo; dropdown to &ldquo;FAQs&rdquo; <span class="hours">(0.5 h)</span></h3>
+<ul class="bullets">
+  <li>Updated the dropdown label in the desktop navigation bar.</li>
+  <li>Updated the same label in the mobile navigation menu.</li>
+  <li>Updated the matching category label in the admin treatment form.</li>
+  <li>Preserved internal data values so existing database records remain valid.</li>
+</ul>
+
+<!-- 2 -->
+<h2 class="section">2. Contact Information Updates</h2>
+<p class="section-time">Estimated effort: 1.0 hour</p>
+
+<h3 class="task">Added fax number (902-200-1286) to the website <span class="hours">(1.0 h)</span></h3>
+<ul class="bullets">
+  <li>Initial implementation: added the fax line inside the existing Phone card.</li>
+  <li>Refined based on client feedback to a dedicated &ldquo;Fax&rdquo; card in the &ldquo;Get In Touch&rdquo; section, alongside Phone, Email, and Address.</li>
+  <li>Added a corresponding fax row in the footer Contact Us column.</li>
+  <li>All entries are clickable (tel: links) for devices that support fax dialing.</li>
+  <li>Section grid layout adjusted from 3-card to a balanced 4-card display on desktop.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- 3 -->
+<h2 class="section">3. Team Page (New Feature)</h2>
+<p class="section-time">Estimated effort: 6.75 hours</p>
+<p class="body">
+  A new Team page was designed and implemented from scratch, with a complementary
+  preview section on the home page. The page supports three categories of people:
+  Administrative Team, Clinical Team, and Our Collaborations.
+</p>
+
+<h3 class="task">Data architecture <span class="hours">(0.75 h)</span></h3>
+<ul class="bullets">
+  <li>Designed a typed, reusable data structure for team members.</li>
+  <li>Centralized all 11 team-member entries (name, title, photo, bio, business, contact) in a single module so future updates require editing only one file.</li>
+  <li>Generated URL-safe slugs for each member to support deep linking from anywhere on the site.</li>
+</ul>
+
+<h3 class="task">Home page Team section (carousel) <span class="hours">(1.5 h)</span></h3>
+<ul class="bullets">
+  <li>Initial 3-section grid layout was prototyped, then revised based on feedback.</li>
+  <li>Final design: a horizontal scrolling carousel showing all 11 members in one row.</li>
+  <li>Snap-scroll with drag-free behavior; navigation arrows appear on desktop.</li>
+  <li>Responsive sizing: 2 cards on mobile, 3 on small tablets, 4 on large tablets, 5 on desktop.</li>
+  <li>Each card displays photo, name, title, and a category badge (Admin / Clinical / Collaborator).</li>
+</ul>
+
+<h3 class="task">Full /team page <span class="hours">(3.0 h)</span></h3>
+<ul class="bullets">
+  <li>Created a standalone route at /team with hero, three labeled sections, and footer.</li>
+  <li>Initial implementation used a full-width row layout per member.</li>
+  <li>Redesigned based on feedback to a modern compact-grid + click-to-expand pattern.</li>
+  <li>Subtle fade-in scroll animations using IntersectionObserver (no heavy animation libraries).</li>
+  <li>Photo zoom and ring-color shift on card hover for a polished feel.</li>
+  <li>Bios collapse and expand inline with smooth height animation.</li>
+  <li>Collaborator cards expand to reveal Website / Phone / Email action buttons.</li>
+  <li>Fully accessible: aria-expanded states, keyboard focus rings, disabled state for cards without bios.</li>
+</ul>
+
+<h3 class="task">Navigation integration <span class="hours">(0.25 h)</span></h3>
+<ul class="bullets">
+  <li>Added &ldquo;Team&rdquo; as a top-level link in the desktop navigation.</li>
+  <li>Added &ldquo;Team&rdquo; to the mobile navigation menu.</li>
+  <li>Added &ldquo;Team&rdquo; link to the footer&rsquo;s Quick Links column.</li>
+</ul>
+
+<h3 class="task">Cross-linking &amp; deep linking <span class="hours">(1.0 h)</span></h3>
+<ul class="bullets">
+  <li>Each card on the home carousel is now clickable, linking to the matching person on /team.</li>
+  <li>URL hash routing (e.g., /team#dr-kamran-khan) auto-scrolls to the right card.</li>
+  <li>Target card is visually highlighted (maroon border + soft ring) on arrival.</li>
+  <li>Target member&rsquo;s bio is pre-expanded so the user sees the information immediately.</li>
+  <li>Smooth scroll with offset for the sticky navigation bar.</li>
+</ul>
+
+<h3 class="task">Section ordering <span class="hours">(0.25 h)</span></h3>
+<ul class="bullets">
+  <li>Reordered the carousel sequence to Admin team first, then Clinical, then Collaborators to match the natural organizational flow.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- 4 -->
+<h2 class="section">4. Photo Management</h2>
+<p class="section-time">Estimated effort: 1.25 hours</p>
+
+<h3 class="task">Wired and refined team photographs <span class="hours">(1.25 h)</span></h3>
+<ul class="bullets">
+  <li>Imported 8 team photographs from the supplied folder.</li>
+  <li>URL-encoded image paths for filenames containing spaces and special characters.</li>
+  <li>Implemented &ldquo;object-top&rdquo; image positioning so faces remain visible inside circular avatars (previously, the default center-crop was cutting off the top of some heads).</li>
+  <li>Added initials-fallback avatars (e.g., &ldquo;CN&rdquo; for Cathy Nabuurs) for team members without a supplied photo, with consistent styling.</li>
+  <li>Updated Maria Khan&rsquo;s photograph to the newly supplied file.</li>
+  <li>Updated Katie Beck&rsquo;s photograph to the newly supplied (smaller, web-optimized) file.</li>
+  <li>Resolved a folder case-sensitivity issue (&ldquo;Team&rdquo; renamed to &ldquo;team&rdquo;) that would have broken photo loading once deployed to the Linux production server.</li>
+</ul>
+
+<!-- 5 -->
+<h2 class="section">5. Footer Redesign</h2>
+<p class="section-time">Estimated effort: 1.25 hours</p>
+
+<h3 class="task">Removed social media column <span class="hours">(0.25 h)</span></h3>
+<ul class="bullets">
+  <li>Removed the &ldquo;Connect With Us&rdquo; section per client request.</li>
+  <li>Removed Facebook, Instagram, Twitter, and LinkedIn icon imports.</li>
+</ul>
+
+<h3 class="task">Restructured into a professional 3-column layout <span class="hours">(0.75 h)</span></h3>
+<ul class="bullets">
+  <li>Added a new &ldquo;Quick Links&rdquo; column with Home, About, Team, Covered Services, Private Pay Services, and Contact.</li>
+  <li>Polished typography: uppercase section headers with consistent letter-spacing.</li>
+  <li>Tightened spacing, aligned icons, and unified hover effects across all links.</li>
+  <li>Mobile-friendly: gracefully stacks columns on small screens.</li>
+</ul>
+
+<h3 class="task">Balanced column widths <span class="hours">(0.25 h)</span></h3>
+<ul class="bullets">
+  <li>Adjusted grid to evenly distribute Logo+Tagline, Quick Links, and Contact Us across three equal columns for visual balance.</li>
+</ul>
+
+<!-- 6 -->
+<h2 class="section">6. UX Bug Fixes &amp; Improvements</h2>
+<p class="section-time">Estimated effort: 1.5 hours</p>
+
+<h3 class="task">Scroll position reset on route change <span class="hours">(0.5 h)</span></h3>
+<ul class="bullets">
+  <li>Created a dedicated route-change handler component.</li>
+  <li>Resolved the issue where clicking &ldquo;View Full Team&rdquo; (or other internal links) would land the user at the same scroll offset on the new page instead of the top.</li>
+  <li>Preserves intentional in-page anchor behavior (e.g., /#about still scrolls to the section).</li>
+</ul>
+
+<h3 class="task">Hash anchor scrolling fixes <span class="hours">(0.75 h)</span></h3>
+<ul class="bullets">
+  <li>Fixed the footer &ldquo;About&rdquo; and &ldquo;Covered Services&rdquo; links that were not scrolling to their target sections after navigation.</li>
+  <li>Added retry logic so the scroll waits for React to render the section before attempting to scroll (covers cross-page navigation).</li>
+  <li>Added a CSS scroll-margin offset so section headings are no longer hidden behind the sticky navigation bar when scrolled into view.</li>
+</ul>
+
+<h3 class="task">Photo cropping fix <span class="hours">(0.25 h)</span></h3>
+<ul class="bullets">
+  <li>Resolved an issue where some portrait photos were being cropped at the top, cutting off the subject&rsquo;s head.</li>
+  <li>Applied &ldquo;object-top&rdquo; anchoring across all team avatars on both the home carousel and the /team page.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- SUMMARY TABLE -->
+<h2 class="section">Time Breakdown Summary</h2>
+
+<table class="summary">
+  <thead>
+    <tr>
+      <th style="width:6%">#</th>
+      <th>Work Area</th>
+      <th style="width:22%">Estimated Hours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>Navigation Updates</td><td>0.50</td></tr>
+    <tr><td>2</td><td>Contact Information Updates</td><td>1.00</td></tr>
+    <tr><td>3</td><td>Team Page (new feature)</td><td>6.75</td></tr>
+    <tr><td>4</td><td>Photo Management</td><td>1.25</td></tr>
+    <tr><td>5</td><td>Footer Redesign</td><td>1.25</td></tr>
+    <tr><td>6</td><td>UX Bug Fixes &amp; Improvements</td><td>1.50</td></tr>
+  </tbody>
+  <tfoot>
+    <tr><td colspan="2">TOTAL</td><td>12.25</td></tr>
+  </tfoot>
+</table>
+
+<footer class="doc-footer">
+  End of document &mdash; Red Sands Pain Management Website Change Log, May 2026
+</footer>
+
+</body>
+</html>

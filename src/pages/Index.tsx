@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import TreatmentsSection from "@/components/TreatmentsSection";
 import PrivatePaySection from "@/components/PrivatePaySection";
 import AboutSection from "@/components/AboutSection";
+import TeamSection from "@/components/TeamSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -16,6 +17,7 @@ const Index = () => {
         <TreatmentsSection />
         <PrivatePaySection />
         <AboutSection />
+        <TeamSection />
         <ContactSection />
       </main>
       <Footer />
