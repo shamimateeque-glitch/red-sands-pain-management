@@ -304,28 +304,14 @@ const Team = () => {
         {/* Hero */}
         <section className="bg-secondary/10 pt-6 pb-10 md:pt-8 md:pb-14">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-10 md:gap-12 items-center max-w-6xl mx-auto">
-              {/* Text */}
-              <div className="order-2 md:order-1">
-                <div className="w-12 h-1 bg-primary rounded-full mb-4" />
-                <h1 className="mb-5 text-maroon">Our Team</h1>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  We have a multidisciplinary team of physicians, nurses, mental health counsellors,
-                  and trusted partners working collaboratively to support individuals living with
-                  chronic pain across Prince Edward Island.
-                </p>
-              </div>
-
-              {/* Office photo */}
-              <div className="order-1 md:order-2 relative max-w-md mx-auto md:max-w-none md:mx-0">
-                <div className="absolute -left-3 top-3 bottom-3 w-1.5 bg-primary rounded-full hidden md:block" />
-                <div className="absolute -bottom-3 -left-3 w-full h-full rounded-xl bg-primary/10 hidden md:block" />
-                <img
-                  src="/team-photos/office-reception.png"
-                  alt="Red Sands Pain Management reception"
-                  className="rounded-xl shadow-2xl w-full relative z-10 aspect-[3/2] object-cover max-h-[360px]"
-                />
-              </div>
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="w-12 h-1 bg-primary rounded-full mb-4 mx-auto" />
+              <h1 className="mb-5 text-maroon">Our Team</h1>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                We have a multidisciplinary team of physicians, nurses, mental health counsellors,
+                and trusted partners working collaboratively to support individuals living with
+                chronic pain across Prince Edward Island.
+              </p>
             </div>
           </div>
         </section>
