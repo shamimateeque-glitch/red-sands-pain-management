@@ -68,7 +68,7 @@ export const clinicalTeam: TeamMember[] = [
   {
     name: "Maria Khan, LPN",
     title: "Pain Nurse",
-    photo: "/team-photos/Maria.jpg",
+    photo: "/team-photos/Maria-newpic.jpg",
     bio: "As a Licensed Practical Nurse with extensive experience in pain management, I provide patient-centered care from initial assessment through ongoing follow-up. I am skilled in conducting detailed intake evaluations and supporting physicians during interventional procedures. I am committed to improving patient outcomes through compassionate care and effective communication, always focusing on creating a comfortable and supportive clinical experience for every patient.",
   },
   {
