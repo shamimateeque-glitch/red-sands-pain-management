@@ -77,7 +77,7 @@ const Footer = () => {
                 className="flex items-center gap-3 text-secondary-foreground/80 hover:text-primary transition-colors"
               >
                 <Printer className="h-4 w-4 flex-shrink-0" />
-                <span>Fax: 902-200-1286</span>
+                <span>Fax: +1 902-200-1286</span>
               </a>
               <a
                 href="mailto:info@redsandspm.com"

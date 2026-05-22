@@ -38,7 +38,7 @@ const ContactSection = () => {
             </CardHeader>
             <CardContent>
               <a href="tel:+19022001286" className="text-primary hover:underline font-medium">
-                902-200-1286
+                +1 902-200-1286
               </a>
             </CardContent>
           </Card>

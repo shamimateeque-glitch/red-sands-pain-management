@@ -87,7 +87,7 @@ export const clinicalTeam: TeamMember[] = [
     ],
   },
   {
-    name: "Katherine (Katie) Arsenault",
+    name: "Katherine (Katie) Arsenault, RN",
     title: "Mental Health / Counselling Nurse",
     photo: "/team-photos/Katherine%20%28Katie%29%20Arsenault.jpeg",
     bio: [
