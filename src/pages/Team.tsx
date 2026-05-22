@@ -322,10 +322,8 @@ const Team = () => {
             <FilterPills active={filter} onChange={setFilter} />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filtered.map((m, i) => (
-                <RevealOnScroll key={m.name} delay={(i % 4) * 80}>
-                  <Card entry={m} onOpen={() => setActive(m)} />
-                </RevealOnScroll>
+              {filtered.map((m) => (
+                <Card key={m.name} entry={m} onOpen={() => setActive(m)} />
               ))}
             </div>
 
