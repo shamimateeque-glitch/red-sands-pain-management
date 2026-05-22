@@ -183,7 +183,18 @@ const MemberDialog = ({
         {entry && (
           <div className="grid md:grid-cols-[260px,1fr] gap-0">
             {/* Photo (prefer modalPhoto when provided) */}
-            <div className="bg-secondary/10 aspect-[4/5] md:aspect-auto md:h-full">
+            <div
+              className={
+                entry.modalAspect
+                  ? "bg-secondary/10 aspect-[4/5] md:aspect-auto"
+                  : "bg-secondary/10 aspect-[4/5] md:aspect-auto md:h-full"
+              }
+              style={
+                entry.modalAspect
+                  ? { aspectRatio: entry.modalAspect.replace("/", " / ") }
+                  : undefined
+              }
+            >
               {entry.modalPhoto || entry.photo ? (
                 <img
                   src={entry.modalPhoto || entry.photo}

@@ -21,6 +21,13 @@ export interface TeamMember {
   initials?: string;
   /** Single string or array of paragraphs. */
   bio?: string | string[];
+  /**
+   * Desktop aspect ratio for the modal photo column (e.g. "3/4", "4/5").
+   * Default behavior stretches the photo to the full modal height, which can
+   * over-crop a well-framed headshot — set this to lock the photo to its
+   * natural aspect on desktop.
+   */
+  modalAspect?: string;
 }
 
 export interface Collaborator extends TeamMember {
@@ -115,10 +122,17 @@ export const collaborators: Collaborator[] = [
   },
   {
     name: "Mandy Fraser",
-    title: "Physiotherapist & Pain Counselor",
-    business: "Aspire Physiology",
+    title: "Physiotherapist & Registered Counselling Therapist",
+    business: "Aspire Physio | Wellness",
     website: "https://www.aspirephysio.ca",
-    initials: "MF",
+    phone: "902-628-1991",
+    photo: "/team-photos/Mandy%20%20Fraser.jpg",
+    modalAspect: "3/4",
+    bio: [
+      "I am a native Islander and Physiotherapist practicing at Aspire Physio Wellness in Stratford, PEI. I completed my Degree in Physiotherapy at Queen's University in 2002 and have more than 20 years of experience in physical rehabilitation, with a special focus on chronic pain management.",
+      "In 2022, I completed my Master's Degree in Counselling Psychology through Yorkville University. I now integrate physiotherapy and psychotherapy using a biopsychosocial approach to help individuals living with persistent pain improve function, quality of life, and participation in meaningful daily activities.",
+      "I am a Registered Counselling Therapist with the College of Counselling Therapists of Prince Edward Island and a Certified Canadian Counsellor (CCC) with the Canadian Counselling and Psychotherapy Association. I am also pleased to collaborate with Dr. Khan and the team at Red Sands Pain Management to provide comprehensive interdisciplinary care for individuals experiencing chronic pain.",
+    ],
   },
   {
     name: "Alice Anand-Toner",
