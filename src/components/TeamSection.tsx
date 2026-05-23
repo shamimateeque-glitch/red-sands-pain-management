@@ -17,10 +17,18 @@ import {
 } from "@/data/team";
 
 // Flatten everyone into a single ordered list, tagging the group for the badge.
+// Mirrors the Team page order: Dr. Kamran Khan is hoisted to the front,
+// followed by the admin team, then the rest of the clinical team, then
+// collaborators.
 type Entry = TeamMember & { group: string };
+const clinicalEntries: Entry[] = clinicalTeam.map((m) => ({ ...m, group: "Clinical" }));
+const drKhanIndex = clinicalEntries.findIndex((m) => m.name === "Dr. Kamran Khan");
+const drKhanEntry = drKhanIndex >= 0 ? clinicalEntries.splice(drKhanIndex, 1) : [];
+
 const everyone: Entry[] = [
+  ...drKhanEntry,
   ...adminTeam.map((m) => ({ ...m, group: "Admin" })),
-  ...clinicalTeam.map((m) => ({ ...m, group: "Clinical" })),
+  ...clinicalEntries,
   ...collaborators.map((m) => ({ ...m, group: "Collaborator" })),
 ];
 

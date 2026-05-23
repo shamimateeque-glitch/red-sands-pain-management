@@ -21,9 +21,20 @@ type Group = "Administrative" | "Clinical" | "Collaborations";
 type Filter = "All" | Group;
 type Entry = (TeamMember | Collaborator) & { group: Group };
 
+// Display order for the "All" view: hoist Dr. Kamran Khan to the front,
+// followed by the admin team, then the rest of the clinical team, then
+// collaborators. Group membership (used by the filter pills) is preserved.
+const clinicalEntries: Entry[] = clinicalTeam.map((m) => ({
+  ...m,
+  group: "Clinical" as Group,
+}));
+const drKhanIndex = clinicalEntries.findIndex((m) => m.name === "Dr. Kamran Khan");
+const drKhanEntry = drKhanIndex >= 0 ? clinicalEntries.splice(drKhanIndex, 1) : [];
+
 const ALL_MEMBERS: Entry[] = [
+  ...drKhanEntry,
   ...adminTeam.map((m) => ({ ...m, group: "Administrative" as Group })),
-  ...clinicalTeam.map((m) => ({ ...m, group: "Clinical" as Group })),
+  ...clinicalEntries,
   ...collaborators.map((m) => ({ ...m, group: "Collaborations" as Group })),
 ];
 
