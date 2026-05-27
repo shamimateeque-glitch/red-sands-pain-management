@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { ArrowLeft, Eye, Sparkles } from "lucide-react";
+import { ArrowLeft, Eye, Plus, Sparkles, X } from "lucide-react";
 import IconPicker from "./IconPicker";
 import FileDropzone from "./FileDropzone";
 import RichTextEditor from "./RichTextEditor";
@@ -39,6 +39,7 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
   });
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [pdfFile2, setPdfFile2] = useState<File | null>(null);
+  const [showSecondPdf, setShowSecondPdf] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [svgFile, setSvgFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -61,6 +62,8 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
       if (treatment.image_url) {
         setImagePreview(treatment.image_url);
       }
+      // Auto-reveal PDF #2 section if a second PDF was previously uploaded.
+      setShowSecondPdf(!!(treatment.pdf_url_2 || treatment.pdf_label_2));
     }
   }, [treatment]);
 
@@ -196,10 +199,14 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
         pdfUrl = await uploadFile(pdfFile, "treatment-pdfs", fileName);
       }
 
-      // Upload PDF #2 if provided
-      if (pdfFile2) {
+      // Upload PDF #2 if provided AND the second-pdf section is currently visible.
+      if (showSecondPdf && pdfFile2) {
         const fileName = `${formData.slug}-2-${Date.now()}.pdf`;
         pdfUrl2 = await uploadFile(pdfFile2, "treatment-pdfs", fileName);
+      }
+      // If user hid the second PDF section, clear any existing PDF #2 from the DB.
+      if (!showSecondPdf) {
+        pdfUrl2 = null;
       }
 
       // Handle image removal - if imagePreview is null and no new file, clear the image_url
@@ -229,7 +236,7 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
         pdf_url: pdfUrl,
         pdf_url_2: pdfUrl2 || null,
         pdf_label: formData.pdfLabel || null,
-        pdf_label_2: formData.pdfLabel2 || null,
+        pdf_label_2: showSecondPdf ? (formData.pdfLabel2 || null) : null,
         image_url: imageUrl,
         icon_svg_url: svgUrl,
         icon_background: formData.iconBackground,
@@ -406,29 +413,56 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
             </div>
           </div>
 
-          <div className="space-y-3 p-4 rounded-lg border border-border/60 bg-muted/20">
-            <Label className="text-sm font-semibold">
-              PDF Document #2 <span className="text-xs font-normal text-muted-foreground">(optional)</span>
-            </Label>
-            <FileDropzone
-              label="PDF file"
-              accept="application/pdf"
-              file={pdfFile2}
-              onFileChange={setPdfFile2}
-              currentFileUrl={treatment?.pdf_url_2}
-            />
-            <div className="space-y-1.5">
-              <Label htmlFor="pdfLabel2" className="text-xs text-muted-foreground">
-                Button label (optional)
-              </Label>
-              <Input
-                id="pdfLabel2"
-                placeholder='e.g. "PRP Infographic"'
-                value={formData.pdfLabel2}
-                onChange={(e) => setFormData({ ...formData, pdfLabel2: e.target.value })}
+          {showSecondPdf ? (
+            <div className="space-y-3 p-4 rounded-lg border border-border/60 bg-muted/20 relative">
+              <div className="flex items-center justify-between">
+                <Label className="text-sm font-semibold">PDF Document #2</Label>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setShowSecondPdf(false);
+                    setPdfFile2(null);
+                    setFormData({ ...formData, pdfLabel2: "" });
+                  }}
+                  className="h-7 text-xs text-muted-foreground hover:text-destructive"
+                >
+                  <X className="h-3.5 w-3.5 mr-1" />
+                  Remove
+                </Button>
+              </div>
+              <FileDropzone
+                label="PDF file"
+                accept="application/pdf"
+                file={pdfFile2}
+                onFileChange={setPdfFile2}
+                currentFileUrl={treatment?.pdf_url_2}
               />
+              <div className="space-y-1.5">
+                <Label htmlFor="pdfLabel2" className="text-xs text-muted-foreground">
+                  Button label (optional)
+                </Label>
+                <Input
+                  id="pdfLabel2"
+                  placeholder='e.g. "PRP Infographic"'
+                  value={formData.pdfLabel2}
+                  onChange={(e) => setFormData({ ...formData, pdfLabel2: e.target.value })}
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setShowSecondPdf(true)}
+              className="w-full border-dashed text-muted-foreground hover:text-foreground"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Add another PDF document
+            </Button>
+          )}
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
