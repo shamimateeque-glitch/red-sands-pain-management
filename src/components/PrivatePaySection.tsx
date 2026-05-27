@@ -134,12 +134,12 @@ const PrivatePaySection = () => {
                 <CardDescription className="text-base">{service.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col sm:flex-row gap-2 sm:items-end">
+                <div className="flex flex-wrap gap-2">
                   {service.slug && service.content && (
                     <Button
                       variant="ghost"
                       asChild
-                      className="group flex-1 transition-all hover:bg-secondary hover:text-white"
+                      className="group transition-all hover:bg-secondary hover:text-white"
                     >
                       <Link to={`/treatment/${service.slug}`} className="flex items-center gap-2">
                         Learn More
@@ -148,45 +148,31 @@ const PrivatePaySection = () => {
                     </Button>
                   )}
                   {service.pdf_url && (
-                    <div className="flex flex-col flex-1">
-                      {service.pdf_label && (
-                        <p className="text-xs font-semibold text-maroon mb-1.5 text-center leading-tight">
-                          {service.pdf_label}
-                        </p>
-                      )}
-                      <Button
-                        onClick={() => handleDownloadPDF(service.pdf_url!)}
-                        className="group w-full transition-all hover:bg-secondary hover:text-white"
-                      >
-                        <span className="flex items-center gap-2">
-                          Download PDF
-                          <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-                        </span>
-                      </Button>
-                    </div>
+                    <Button
+                      onClick={() => handleDownloadPDF(service.pdf_url!)}
+                      className="group transition-all hover:bg-secondary hover:text-white"
+                    >
+                      <span className="flex items-center gap-2">
+                        {service.pdf_label || "Download PDF"}
+                        <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
+                      </span>
+                    </Button>
                   )}
                   {service.pdf_url_2 && (
-                    <div className="flex flex-col flex-1">
-                      {service.pdf_label_2 && (
-                        <p className="text-xs font-semibold text-maroon mb-1.5 text-center leading-tight">
-                          {service.pdf_label_2}
-                        </p>
-                      )}
-                      <Button
-                        onClick={() => handleDownloadPDF(service.pdf_url_2!)}
-                        className="group w-full transition-all hover:bg-secondary hover:text-white"
-                      >
-                        <span className="flex items-center gap-2">
-                          Download PDF
-                          <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-                        </span>
-                      </Button>
-                    </div>
+                    <Button
+                      onClick={() => handleDownloadPDF(service.pdf_url_2!)}
+                      className="group transition-all hover:bg-secondary hover:text-white"
+                    >
+                      <span className="flex items-center gap-2">
+                        {service.pdf_label_2 || "Download PDF"}
+                        <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
+                      </span>
+                    </Button>
                   )}
                   {service.external_url && (
                     <Button
                       asChild
-                      className="group flex-1 transition-all hover:bg-secondary hover:text-white"
+                      className="group transition-all hover:bg-secondary hover:text-white"
                     >
                       <a
                         href={service.external_url}
