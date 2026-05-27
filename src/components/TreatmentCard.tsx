@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Download } from "lucide-react";
+import { buildDownloadFilename, downloadPdf } from "@/lib/downloadPdf";
 
 interface TreatmentCardProps {
   title: string;
@@ -15,22 +16,8 @@ interface TreatmentCardProps {
 }
 
 const TreatmentCard = ({ title, description, icon, slug, pdfUrl, iconSvgUrl, iconBackground }: TreatmentCardProps) => {
-  const handleDownloadPDF = async (url: string) => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = url.split('/').pop() || 'document.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(downloadUrl);
-    } catch (error) {
-      console.error('Download failed:', error);
-    }
-  };
+  const handleDownloadPDF = (url: string) =>
+    downloadPdf(url, buildDownloadFilename(title));
 
   return (
     <Card className="h-full hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1">

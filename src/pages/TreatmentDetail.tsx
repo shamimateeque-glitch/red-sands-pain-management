@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { buildDownloadFilename, downloadPdf } from "@/lib/downloadPdf";
 
 interface Treatment {
   id: string;
@@ -22,22 +23,8 @@ const TreatmentDetail = () => {
   const [treatment, setTreatment] = useState<Treatment | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const handleDownloadPDF = async (pdfUrl: string) => {
-    try {
-      const response = await fetch(pdfUrl);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = pdfUrl.split('/').pop() || 'treatment-information.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error downloading PDF:', error);
-    }
-  };
+  const handleDownloadPDF = (pdfUrl: string) =>
+    downloadPdf(pdfUrl, buildDownloadFilename(treatment?.title));
 
   useEffect(() => {
     window.scrollTo(0, 0);

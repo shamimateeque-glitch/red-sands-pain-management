@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Download, ExternalLink } from "lucide-react";
 import * as Icons from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { buildDownloadFilename, downloadPdf } from "@/lib/downloadPdf";
 
 interface PrivatePayService {
   id: string;
@@ -72,32 +73,7 @@ const PrivatePaySection = () => {
     return <Icon className="h-6 w-6" />;
   };
 
-  // Strip characters that aren't legal in filenames on Windows/macOS.
-  const sanitizeForFilename = (s: string) => s.replace(/[/\\:*?"<>|]+/g, "").trim();
-
-  // Build a human-readable filename like "Red Sands - {title} - {label}.pdf"
-  const buildDownloadFilename = (title: string, label?: string | null) => {
-    const parts = ["Red Sands", sanitizeForFilename(title)];
-    if (label) parts.push(sanitizeForFilename(label));
-    return parts.join(" - ") + ".pdf";
-  };
-
-  const handleDownloadPDF = async (url: string, filename?: string) => {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.download = filename || url.split("/").pop() || "document.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(downloadUrl);
-    } catch (error) {
-      console.error("Download failed:", error);
-    }
-  };
+  const handleDownloadPDF = (url: string, filename?: string) => downloadPdf(url, filename);
 
   if (loading) {
     return (
