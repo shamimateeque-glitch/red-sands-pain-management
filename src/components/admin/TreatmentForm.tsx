@@ -34,8 +34,11 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
     iconBackground: "white",
     serviceType: "covered",
     externalUrl: "",
+    pdfLabel: "",
+    pdfLabel2: "",
   });
   const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [pdfFile2, setPdfFile2] = useState<File | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [svgFile, setSvgFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -52,6 +55,8 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
         iconBackground: treatment.icon_background || "white",
         serviceType: treatment.service_type || "covered",
         externalUrl: treatment.external_url || "",
+        pdfLabel: treatment.pdf_label || "",
+        pdfLabel2: treatment.pdf_label_2 || "",
       });
       if (treatment.image_url) {
         setImagePreview(treatment.image_url);
@@ -181,13 +186,20 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
       }
 
       let pdfUrl = treatment?.pdf_url;
+      let pdfUrl2 = treatment?.pdf_url_2;
       let imageUrl = treatment?.image_url;
       let svgUrl = treatment?.icon_svg_url;
 
-      // Upload PDF if provided
+      // Upload PDF #1 if provided
       if (pdfFile) {
         const fileName = `${formData.slug}-${Date.now()}.pdf`;
         pdfUrl = await uploadFile(pdfFile, "treatment-pdfs", fileName);
+      }
+
+      // Upload PDF #2 if provided
+      if (pdfFile2) {
+        const fileName = `${formData.slug}-2-${Date.now()}.pdf`;
+        pdfUrl2 = await uploadFile(pdfFile2, "treatment-pdfs", fileName);
       }
 
       // Handle image removal - if imagePreview is null and no new file, clear the image_url
@@ -215,6 +227,9 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
         content: formData.content,
         icon: formData.icon,
         pdf_url: pdfUrl,
+        pdf_url_2: pdfUrl2 || null,
+        pdf_label: formData.pdfLabel || null,
+        pdf_label_2: formData.pdfLabel2 || null,
         image_url: imageUrl,
         icon_svg_url: svgUrl,
         icon_background: formData.iconBackground,
@@ -369,13 +384,51 @@ const TreatmentForm = ({ treatment, onClose, onSave }: TreatmentFormProps) => {
             currentFileUrl={treatment?.icon_svg_url}
           />
 
-          <FileDropzone
-            label="PDF Document"
-            accept="application/pdf"
-            file={pdfFile}
-            onFileChange={setPdfFile}
-            currentFileUrl={treatment?.pdf_url}
-          />
+          <div className="space-y-3 p-4 rounded-lg border border-border/60 bg-muted/20">
+            <Label className="text-sm font-semibold">PDF Document #1</Label>
+            <FileDropzone
+              label="PDF file"
+              accept="application/pdf"
+              file={pdfFile}
+              onFileChange={setPdfFile}
+              currentFileUrl={treatment?.pdf_url}
+            />
+            <div className="space-y-1.5">
+              <Label htmlFor="pdfLabel" className="text-xs text-muted-foreground">
+                Button label (optional — defaults to "Download PDF")
+              </Label>
+              <Input
+                id="pdfLabel"
+                placeholder='e.g. "Patient Information Leaflet"'
+                value={formData.pdfLabel}
+                onChange={(e) => setFormData({ ...formData, pdfLabel: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-3 p-4 rounded-lg border border-border/60 bg-muted/20">
+            <Label className="text-sm font-semibold">
+              PDF Document #2 <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+            </Label>
+            <FileDropzone
+              label="PDF file"
+              accept="application/pdf"
+              file={pdfFile2}
+              onFileChange={setPdfFile2}
+              currentFileUrl={treatment?.pdf_url_2}
+            />
+            <div className="space-y-1.5">
+              <Label htmlFor="pdfLabel2" className="text-xs text-muted-foreground">
+                Button label (optional)
+              </Label>
+              <Input
+                id="pdfLabel2"
+                placeholder='e.g. "PRP Infographic"'
+                value={formData.pdfLabel2}
+                onChange={(e) => setFormData({ ...formData, pdfLabel2: e.target.value })}
+              />
+            </div>
+          </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">

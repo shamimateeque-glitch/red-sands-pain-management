@@ -13,6 +13,9 @@ interface PrivatePayService {
   description: string | null;
   icon: string | null;
   pdf_url: string | null;
+  pdf_url_2: string | null;
+  pdf_label: string | null;
+  pdf_label_2: string | null;
   image_url: string | null;
   external_url: string | null;
   icon_svg_url: string | null;
@@ -150,7 +153,18 @@ const PrivatePaySection = () => {
                       className="group flex-1 transition-all hover:bg-secondary hover:text-white"
                     >
                       <span className="flex items-center gap-2">
-                        Download PDF
+                        {service.pdf_label || "Download PDF"}
+                        <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
+                      </span>
+                    </Button>
+                  )}
+                  {service.pdf_url_2 && (
+                    <Button
+                      onClick={() => handleDownloadPDF(service.pdf_url_2!)}
+                      className="group flex-1 transition-all hover:bg-secondary hover:text-white"
+                    >
+                      <span className="flex items-center gap-2">
+                        {service.pdf_label_2 || "Download PDF"}
                         <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
                       </span>
                     </Button>

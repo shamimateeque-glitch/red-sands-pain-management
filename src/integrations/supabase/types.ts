@@ -225,6 +225,9 @@ export type Database = {
           id: string
           image_url: string | null
           pdf_url: string | null
+          pdf_url_2: string | null
+          pdf_label: string | null
+          pdf_label_2: string | null
           service_type: string
           slug: string
           title: string
@@ -242,6 +245,9 @@ export type Database = {
           id?: string
           image_url?: string | null
           pdf_url?: string | null
+          pdf_url_2?: string | null
+          pdf_label?: string | null
+          pdf_label_2?: string | null
           service_type?: string
           slug: string
           title: string
@@ -259,6 +265,9 @@ export type Database = {
           id?: string
           image_url?: string | null
           pdf_url?: string | null
+          pdf_url_2?: string | null
+          pdf_label?: string | null
+          pdf_label_2?: string | null
           service_type?: string
           slug?: string
           title?: string

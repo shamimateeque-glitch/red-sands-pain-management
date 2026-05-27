@@ -62,8 +62,8 @@ const PRPDetail = () => {
                   <Button
                     onClick={() => {
                       const link = document.createElement("a");
-                      link.href = "/documents/RSPM - PRP PIL-updated.pdf";
-                      link.download = "RSPM - PRP PIL-updated.pdf";
+                      link.href = "/documents/RSPM PRP Final-updated.pdf";
+                      link.download = "RSPM PRP Final-updated.pdf";
                       document.body.appendChild(link);
                       link.click();
                       document.body.removeChild(link);
