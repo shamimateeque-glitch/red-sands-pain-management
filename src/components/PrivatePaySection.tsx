@@ -134,45 +134,35 @@ const PrivatePaySection = () => {
                 <CardDescription className="text-base">{service.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {service.slug && service.content && (
+                {(() => {
+                  const hasTwoPdfs = !!service.pdf_url && !!service.pdf_url_2;
+                  const learnMoreBtn = service.slug && service.content && (
                     <Button
                       variant="ghost"
                       asChild
-                      className="group transition-all hover:bg-secondary hover:text-white"
+                      className="group flex-1 transition-all hover:bg-secondary hover:text-white"
                     >
                       <Link to={`/treatment/${service.slug}`} className="flex items-center gap-2">
                         Learn More
                         <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </Button>
-                  )}
-                  {service.pdf_url && (
+                  );
+                  const pdfBtn = (url: string, label?: string | null) => (
                     <Button
-                      onClick={() => handleDownloadPDF(service.pdf_url!)}
-                      className="group transition-all hover:bg-secondary hover:text-white"
+                      onClick={() => handleDownloadPDF(url)}
+                      className="group flex-1 transition-all hover:bg-secondary hover:text-white"
                     >
                       <span className="flex items-center gap-2">
-                        {service.pdf_label || "Download PDF"}
+                        {label || "Download PDF"}
                         <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
                       </span>
                     </Button>
-                  )}
-                  {service.pdf_url_2 && (
-                    <Button
-                      onClick={() => handleDownloadPDF(service.pdf_url_2!)}
-                      className="group transition-all hover:bg-secondary hover:text-white"
-                    >
-                      <span className="flex items-center gap-2">
-                        {service.pdf_label_2 || "Download PDF"}
-                        <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-                      </span>
-                    </Button>
-                  )}
-                  {service.external_url && (
+                  );
+                  const visitBtn = service.external_url && (
                     <Button
                       asChild
-                      className="group transition-all hover:bg-secondary hover:text-white"
+                      className="group flex-1 transition-all hover:bg-secondary hover:text-white"
                     >
                       <a
                         href={service.external_url}
@@ -184,8 +174,35 @@ const PrivatePaySection = () => {
                         <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                       </a>
                     </Button>
-                  )}
-                </div>
+                  );
+
+                  // PRP-style layout: two PDFs side-by-side, Learn More / Visit Website below
+                  if (hasTwoPdfs) {
+                    return (
+                      <div className="flex flex-col gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
+                          {pdfBtn(service.pdf_url!, service.pdf_label)}
+                          {pdfBtn(service.pdf_url_2!, service.pdf_label_2)}
+                        </div>
+                        {(learnMoreBtn || visitBtn) && (
+                          <div className="flex flex-col sm:flex-row gap-2">
+                            {learnMoreBtn}
+                            {visitBtn}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  // Single-PDF (or no PDF) layout: keeps the existing single-row design
+                  return (
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      {learnMoreBtn}
+                      {service.pdf_url && pdfBtn(service.pdf_url, service.pdf_label)}
+                      {visitBtn}
+                    </div>
+                  );
+                })()}
               </CardContent>
             </Card>
           ))}
