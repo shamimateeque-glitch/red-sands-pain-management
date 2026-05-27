@@ -134,7 +134,7 @@ const PrivatePaySection = () => {
                 <CardDescription className="text-base">{service.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col sm:flex-row gap-2">
+                <div className="flex flex-col sm:flex-row gap-2 sm:items-end">
                   {service.slug && service.content && (
                     <Button
                       variant="ghost"
@@ -148,26 +148,40 @@ const PrivatePaySection = () => {
                     </Button>
                   )}
                   {service.pdf_url && (
-                    <Button
-                      onClick={() => handleDownloadPDF(service.pdf_url!)}
-                      className="group flex-1 transition-all hover:bg-secondary hover:text-white"
-                    >
-                      <span className="flex items-center gap-2">
-                        {service.pdf_label || "Download PDF"}
-                        <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-                      </span>
-                    </Button>
+                    <div className="flex flex-col flex-1">
+                      {service.pdf_label && (
+                        <p className="text-xs font-semibold text-maroon mb-1.5 text-center leading-tight">
+                          {service.pdf_label}
+                        </p>
+                      )}
+                      <Button
+                        onClick={() => handleDownloadPDF(service.pdf_url!)}
+                        className="group w-full transition-all hover:bg-secondary hover:text-white"
+                      >
+                        <span className="flex items-center gap-2">
+                          Download PDF
+                          <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
+                        </span>
+                      </Button>
+                    </div>
                   )}
                   {service.pdf_url_2 && (
-                    <Button
-                      onClick={() => handleDownloadPDF(service.pdf_url_2!)}
-                      className="group flex-1 transition-all hover:bg-secondary hover:text-white"
-                    >
-                      <span className="flex items-center gap-2">
-                        {service.pdf_label_2 || "Download PDF"}
-                        <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-                      </span>
-                    </Button>
+                    <div className="flex flex-col flex-1">
+                      {service.pdf_label_2 && (
+                        <p className="text-xs font-semibold text-maroon mb-1.5 text-center leading-tight">
+                          {service.pdf_label_2}
+                        </p>
+                      )}
+                      <Button
+                        onClick={() => handleDownloadPDF(service.pdf_url_2!)}
+                        className="group w-full transition-all hover:bg-secondary hover:text-white"
+                      >
+                        <span className="flex items-center gap-2">
+                          Download PDF
+                          <Download className="h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
+                        </span>
+                      </Button>
+                    </div>
                   )}
                   {service.external_url && (
                     <Button
