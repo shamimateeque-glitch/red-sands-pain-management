@@ -63,16 +63,6 @@ export const clinicalTeam: TeamMember[] = [
     bio: "I completed my Anesthesiology and Pain Management specialist training at the University of Oxford in the UK in 2008, as a Fellow of the Royal College of Anaesthetists (FRCA). I have special interest and expertise in ultrasound and x-ray guided acute and chronic pain interventions. I am trained to provide a wide spectrum of pain management services for patients affected by neck, back, joint and a variety of other types of pain. I always take a biopsychosocial approach in providing comprehensive multidisciplinary care to our chronic pain patient population.",
   },
   {
-    name: "Cathy Nabuurs",
-    title: "Nurse Practitioner",
-    photo: "/team-photos/Cathy%20Nabuurs.jpg",
-    bio: [
-      "I graduated from the Dalhousie University Family All Ages Nurse Practitioner Program in 2020 and began my career as an Orthopedic and Pain Management Nurse Practitioner. In 2022, I completed the NP Graduate Orthopedic Certificate through Duke University.",
-      "I have experience treating a variety of orthopedic and pain-related conditions, including performing joint and soft tissue injections. My approach focuses on evidence-based care, patient education, and helping individuals improve their function and quality of life.",
-      "Outside of work, I enjoy staying active, running, and spending quality time with my husband and two children.",
-    ],
-  },
-  {
     name: "Maria Khan, LPN",
     title: "Pain Nurse",
     photo: "/team-photos/Maria-newpic.jpg",
