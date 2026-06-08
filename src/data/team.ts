@@ -136,4 +136,14 @@ export const collaborators: Collaborator[] = [
       "I am passionate about helping individuals achieve meaningful recovery goals through personalized rehabilitation, education, and support. I currently practice at Summerside Occupational Therapy and CBI Health.",
     ],
   },
+  {
+    name: "Trevor Dunphy",
+    title: "Physiotherapist",
+    business: "Physio Fix PEI",
+    website: "https://www.physiofixpei.ca",
+    phone: "902-901-5300",
+    email: "info@physiofixpei.ca",
+    photo: "/team-photos/Trevor.jpg",
+    bio: "I graduated from the University of Ottawa with a Master of Science in Physiotherapy. As a former varsity soccer player and avid runner, I understand how important movement is for staying healthy, active, and doing the things you love. I'm passionate about helping people of all ages recover from injury, achieve their goals, and get back to living confidently. I enjoy working with patients in both English and French, creating a comfortable and supportive experience for everyone.",
+  },
 ];
