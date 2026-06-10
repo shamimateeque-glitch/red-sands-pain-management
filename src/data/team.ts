@@ -139,11 +139,11 @@ export const collaborators: Collaborator[] = [
   {
     name: "Trevor Dunphy",
     title: "Physiotherapist",
-    business: "Physio Fix PEI",
+    business: "PhysioFIX PEI",
     website: "https://www.physiofixpei.ca",
     phone: "902-901-5300",
     email: "info@physiofixpei.ca",
-    photo: "/team-photos/trevor-new.png",
+    photo: "/team-photos/Trevor-41.jpg",
     bio: "I graduated from the University of Ottawa with a Master of Science in Physiotherapy. As a former varsity soccer player and avid runner, I understand how important movement is for staying healthy, active, and doing the things you love. I'm passionate about helping people of all ages recover from injury, achieve their goals, and get back to living confidently. I enjoy working with patients in both English and French, creating a comfortable and supportive experience for everyone.",
   },
 ];
