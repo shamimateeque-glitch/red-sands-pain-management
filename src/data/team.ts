@@ -35,6 +35,8 @@ export interface Collaborator extends TeamMember {
   website?: string;
   phone?: string;
   email?: string;
+  /** Optional postal/street address. Shown in the modal under the business. */
+  address?: string;
 }
 
 export const adminTeam: TeamMember[] = [
@@ -140,6 +142,7 @@ export const collaborators: Collaborator[] = [
     name: "Trevor Dunphy",
     title: "Physiotherapist",
     business: "PhysioFIX PEI",
+    address: "75 John Joe Sark Dr, Stratford, PE C1B 4R3",
     website: "https://www.physiofixpei.ca",
     phone: "902-901-5300",
     email: "info@physiofixpei.ca",
@@ -150,6 +153,7 @@ export const collaborators: Collaborator[] = [
     name: "Marcel Macdonald",
     title: "Physiotherapist & Partner",
     business: "Reactive Health & Wellness",
+    address: "175 Shakespeare Drive, Stratford, PE C1B 4J7",
     website: "https://www.reactivehealth.com",
     phone: "902-370-7322",
     email: "charlottetown@reactivehealth.com",

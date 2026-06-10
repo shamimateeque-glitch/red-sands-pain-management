@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ExternalLink, Phone, Mail } from "lucide-react";
+import { ExternalLink, Phone, Mail, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import Navigation from "@/components/Navigation";
@@ -229,6 +229,17 @@ const MemberDialog = ({
                 <p className="text-sm text-muted-foreground mt-1.5">
                   {collab.business}
                 </p>
+              )}
+              {collab && collab.address && (
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(collab.address)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-start gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors leading-snug"
+                >
+                  <MapPin className="h-3.5 w-3.5 mt-px flex-shrink-0" />
+                  <span>{collab.address}</span>
+                </a>
               )}
 
               {bios.length > 0 && (
