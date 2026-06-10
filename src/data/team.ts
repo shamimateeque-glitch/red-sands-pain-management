@@ -146,4 +146,18 @@ export const collaborators: Collaborator[] = [
     photo: "/team-photos/Trevor-41.jpg",
     bio: "I graduated from the University of Ottawa with a Master of Science in Physiotherapy. As a former varsity soccer player and avid runner, I understand how important movement is for staying healthy, active, and doing the things you love. I'm passionate about helping people of all ages recover from injury, achieve their goals, and get back to living confidently. I enjoy working with patients in both English and French, creating a comfortable and supportive experience for everyone.",
   },
+  {
+    name: "Marcel Macdonald",
+    title: "Physiotherapist & Partner",
+    business: "Reactive Health & Wellness",
+    website: "https://www.reactivehealth.com",
+    phone: "902-370-7322",
+    email: "charlottetown@reactivehealth.com",
+    photo: "/team-photos/Marcel%20Macdonald.png",
+    bio: [
+      "I am a physiotherapist with a special interest in shoulder rehabilitation. After earning my Master of Science in Physiotherapy from Dalhousie University in 2008, I have continued to advance my expertise through extensive post-graduate education in the assessment and treatment of shoulder conditions.",
+      "From 2019 to 2021, I developed a shoulder rehabilitation pilot program in partnership with the Workers Compensation Board of PEI, which resulted in significantly improved return-to-work outcomes for injured workers.",
+      "My approach combines evidence-based care, patient education, therapeutic exercise, and manual therapy to help individuals reduce pain, restore function, and return to their daily activities with confidence. I am proud to work collaboratively with Dr. Khan and his team to provide comprehensive care for people experiencing shoulder pain and dysfunction.",
+    ],
+  },
 ];
