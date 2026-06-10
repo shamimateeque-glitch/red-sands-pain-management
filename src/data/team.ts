@@ -103,6 +103,7 @@ export const collaborators: Collaborator[] = [
     title: "Clinical Exercise Physiologist (CSEP-CEP) & Professional Kinesiologist",
     business: "Beck Exercise Physiology Inc",
     photo: "/team-photos/Katie-beck.jpg",
+    modalAspect: "852/1002",
     website: "https://www.beckexercisephysiology.ca",
     phone: "902-367-0320",
     email: "katie@beckexercisephysiology.ca",
