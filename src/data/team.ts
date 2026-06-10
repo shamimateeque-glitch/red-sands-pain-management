@@ -158,6 +158,7 @@ export const collaborators: Collaborator[] = [
     phone: "902-370-7322",
     email: "charlottetown@reactivehealth.com",
     photo: "/team-photos/Marcel%20Macdonald.png",
+    modalAspect: "1/1",
     bio: [
       "I am a physiotherapist with a special interest in shoulder rehabilitation. After earning my Master of Science in Physiotherapy from Dalhousie University in 2008, I have continued to advance my expertise through extensive post-graduate education in the assessment and treatment of shoulder conditions.",
       "From 2019 to 2021, I developed a shoulder rehabilitation pilot program in partnership with the Workers Compensation Board of PEI, which resulted in significantly improved return-to-work outcomes for injured workers.",
