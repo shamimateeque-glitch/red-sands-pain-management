@@ -1,6 +1,6 @@
 import consultationImage from "@/assets/consultation-new.png";
 import { useEffect, useRef, useState } from "react";
-import { Stethoscope, Shield, Users, FileText } from "lucide-react";
+import { Stethoscope, Shield, Users, FileText, Download } from "lucide-react";
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -100,6 +100,17 @@ const AboutSection = () => {
                   All patients should have a referral to be seen at the clinic. Your Doctor, Nurse Practitioner,
                   Chiropractor or a Physiotherapist can refer you to us.
                 </p>
+                <p className="text-foreground/70 text-sm leading-relaxed mt-2">
+                  Referral can be faxed or emailed.
+                </p>
+                <a
+                  href="/documents/Red-Sands-Referral-Form.pdf"
+                  download="Red-Sands-Referral-Form.pdf"
+                  className="mt-3 inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90"
+                >
+                  <Download className="h-4 w-4" />
+                  Download Form
+                </a>
               </div>
             </div>
           </div>
