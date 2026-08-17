@@ -85,16 +85,6 @@ export const clinicalTeam: TeamMember[] = [
       "Outside of my professional life, I am a mother of two and truly enjoy life.",
     ],
   },
-  {
-    name: "Katherine (Katie) Arsenault, RN",
-    title: "Mental Health / Counselling Nurse",
-    photo: "/team-photos/Katherine%20%28Katie%29%20Arsenault.jpeg",
-    bio: [
-      "My name is Katherine (Katie) Arsenault. I was born and raised on Prince Edward Island and recently returned home to be closer to my family.",
-      "For the past 18 years, I have worked as a Registered Nurse in mental health in Moncton. I am passionate about fostering emotional resilience and supporting individuals living with chronic pain and the mental health challenges that often accompany it.",
-      "I am excited to join the Red Sands Pain Management team and provide compassionate mental health support to patients while serving the PEI community I am proud to call home.",
-    ],
-  },
 ];
 
 export const collaborators: Collaborator[] = [
