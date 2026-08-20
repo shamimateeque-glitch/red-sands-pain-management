@@ -212,6 +212,66 @@ export type Database = {
         }
         Relationships: []
       }
+      team_members: {
+        Row: {
+          address: string | null
+          bio: Json
+          business: string | null
+          category: string
+          created_at: string | null
+          display_order: number
+          email: string | null
+          id: string
+          initials: string | null
+          modal_aspect: string | null
+          modal_photo_url: string | null
+          name: string
+          phone: string | null
+          photo_url: string | null
+          title: string
+          updated_at: string | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          bio?: Json
+          business?: string | null
+          category?: string
+          created_at?: string | null
+          display_order?: number
+          email?: string | null
+          id?: string
+          initials?: string | null
+          modal_aspect?: string | null
+          modal_photo_url?: string | null
+          name: string
+          phone?: string | null
+          photo_url?: string | null
+          title: string
+          updated_at?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          bio?: Json
+          business?: string | null
+          category?: string
+          created_at?: string | null
+          display_order?: number
+          email?: string | null
+          id?: string
+          initials?: string | null
+          modal_aspect?: string | null
+          modal_photo_url?: string | null
+          name?: string
+          phone?: string | null
+          photo_url?: string | null
+          title?: string
+          updated_at?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       treatments: {
         Row: {
           content: string | null

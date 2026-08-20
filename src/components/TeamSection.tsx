@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,35 +9,21 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  adminTeam,
-  clinicalTeam,
-  collaborators,
-  teamSlug,
-  type TeamMember,
-} from "@/data/team";
+import { supabase } from "@/integrations/supabase/client";
+import { teamSlug } from "@/data/team";
+import type { TeamMember } from "@/types/team";
 
-// Flatten everyone into a single ordered list, tagging the group for the badge.
-// Mirrors the Team page order: Dr. Kamran Khan is hoisted to the front,
-// followed by the admin team, then the rest of the clinical team, then
-// collaborators.
-type Entry = TeamMember & { group: string };
-const clinicalEntries: Entry[] = clinicalTeam.map((m) => ({ ...m, group: "Clinical" }));
-const drKhanIndex = clinicalEntries.findIndex((m) => m.name === "Dr. Kamran Khan");
-const drKhanEntry = drKhanIndex >= 0 ? clinicalEntries.splice(drKhanIndex, 1) : [];
-
-const everyone: Entry[] = [
-  ...drKhanEntry,
-  ...adminTeam.map((m) => ({ ...m, group: "Admin" })),
-  ...clinicalEntries,
-  ...collaborators.map((m) => ({ ...m, group: "Collaborator" })),
-];
+const CATEGORY_BADGE: Record<string, string> = {
+  administrative: "Admin",
+  clinical: "Clinical",
+  collaborations: "Collaborator",
+};
 
 const Avatar = ({ member }: { member: TeamMember }) => {
-  if (member.photo) {
+  if (member.photo_url) {
     return (
       <img
-        src={member.photo}
+        src={member.photo_url}
         alt={member.name}
         className="w-28 h-28 rounded-full object-cover object-top shadow-md ring-4 ring-white"
         loading="lazy"
@@ -50,7 +37,7 @@ const Avatar = ({ member }: { member: TeamMember }) => {
   );
 };
 
-const Card = ({ member }: { member: Entry }) => (
+const Card = ({ member }: { member: TeamMember }) => (
   <Link
     to={`/team#${teamSlug(member.name)}`}
     className="group flex flex-col items-center text-center bg-white border border-border/50 rounded-xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-primary/40 transition-all h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
@@ -62,12 +49,43 @@ const Card = ({ member }: { member: Entry }) => (
     </h4>
     <p className="text-xs text-muted-foreground mt-1 leading-snug">{member.title}</p>
     <span className="mt-3 inline-block px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-medium tracking-wide uppercase">
-      {member.group}
+      {CATEGORY_BADGE[member.category] ?? member.category}
     </span>
   </Link>
 );
 
 const TeamSection = () => {
+  const [members, setMembers] = useState<TeamMember[]>([]);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      const { data, error } = await supabase
+        .from("team_members")
+        .select("*")
+        .order("display_order", { ascending: true })
+        .order("name", { ascending: true });
+
+      if (!error && data) {
+        setMembers(data as TeamMember[]);
+      }
+    };
+
+    fetchMembers();
+
+    const channel = supabase
+      .channel("team-section-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "team_members" },
+        () => fetchMembers()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   return (
     <section id="team" className="py-16 md:py-20 bg-secondary/5">
       <div className="container mx-auto px-4">
@@ -84,9 +102,9 @@ const TeamSection = () => {
           className="w-full max-w-6xl mx-auto"
         >
           <CarouselContent className="-ml-3 md:-ml-4">
-            {everyone.map((m) => (
+            {members.map((m) => (
               <CarouselItem
-                key={m.name}
+                key={m.id}
                 className="pl-3 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5"
               >
                 <Card member={m} />
