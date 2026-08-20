@@ -6,42 +6,23 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import {
-  adminTeam,
-  clinicalTeam,
-  collaborators,
-  teamSlug,
-  type TeamMember,
-  type Collaborator,
-} from "@/data/team";
+import { supabase } from "@/integrations/supabase/client";
+import { teamSlug } from "@/data/team";
+import { normalizeBio, type TeamMember } from "@/types/team";
 
 /* ---------------- Types ---------------- */
 
-type Group = "Administrative" | "Clinical" | "Collaborations";
-type Filter = "All" | Group;
-type Entry = (TeamMember | Collaborator) & { group: Group };
-
-// Display order for the "All" view: hoist Dr. Kamran Khan to the front,
-// followed by the admin team, then the rest of the clinical team, then
-// collaborators. Group membership (used by the filter pills) is preserved.
-const clinicalEntries: Entry[] = clinicalTeam.map((m) => ({
-  ...m,
-  group: "Clinical" as Group,
-}));
-const drKhanIndex = clinicalEntries.findIndex((m) => m.name === "Dr. Kamran Khan");
-const drKhanEntry = drKhanIndex >= 0 ? clinicalEntries.splice(drKhanIndex, 1) : [];
-
-const ALL_MEMBERS: Entry[] = [
-  ...drKhanEntry,
-  ...adminTeam.map((m) => ({ ...m, group: "Administrative" as Group })),
-  ...clinicalEntries,
-  ...collaborators.map((m) => ({ ...m, group: "Collaborations" as Group })),
-];
+type Filter = "All" | "Administrative" | "Clinical" | "Collaborations";
 
 const FILTERS: Filter[] = ["All", "Administrative", "Clinical", "Collaborations"];
 
-const isCollab = (m: TeamMember | Collaborator): m is Collaborator =>
-  "business" in m;
+const CATEGORY_LABEL: Record<string, Filter> = {
+  administrative: "Administrative",
+  clinical: "Clinical",
+  collaborations: "Collaborations",
+};
+
+const isCollab = (m: TeamMember) => m.category === "collaborations";
 
 /* ---------------- Reveal-on-scroll ---------------- */
 
@@ -98,9 +79,9 @@ const InitialsBlock = ({ member }: { member: TeamMember }) => (
 
 const CardPhoto = ({ member }: { member: TeamMember }) => (
   <div className="aspect-[4/5] overflow-hidden bg-secondary/10">
-    {member.photo ? (
+    {member.photo_url ? (
       <img
-        src={member.photo}
+        src={member.photo_url}
         alt={member.name}
         className="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500"
         loading="lazy"
@@ -117,7 +98,7 @@ const Card = ({
   entry,
   onOpen,
 }: {
-  entry: Entry;
+  entry: TeamMember;
   onOpen: () => void;
 }) => (
   <button
@@ -134,7 +115,7 @@ const Card = ({
       <p className="text-sm text-muted-foreground mt-1.5 leading-snug">
         {entry.title}
       </p>
-      {isCollab(entry) && (
+      {isCollab(entry) && entry.business && (
         <p className="text-xs text-primary/70 mt-1.5 font-medium">{entry.business}</p>
       )}
     </div>
@@ -178,37 +159,33 @@ const MemberDialog = ({
   entry,
   onClose,
 }: {
-  entry: Entry | null;
+  entry: TeamMember | null;
   onClose: () => void;
 }) => {
   const collab = entry && isCollab(entry) ? entry : null;
-  const bios = entry?.bio
-    ? Array.isArray(entry.bio)
-      ? entry.bio
-      : [entry.bio]
-    : [];
+  const bios = entry ? normalizeBio(entry.bio) : [];
 
   return (
     <Dialog open={!!entry} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 gap-0">
         {entry && (
           <div className="grid md:grid-cols-[260px,1fr] gap-0">
-            {/* Photo (prefer modalPhoto when provided) */}
+            {/* Photo (prefer modal photo when provided) */}
             <div
               className={
-                entry.modalAspect
+                entry.modal_aspect
                   ? "bg-secondary/10 aspect-[4/5] md:aspect-auto"
                   : "bg-secondary/10 aspect-[4/5] md:aspect-auto md:h-full"
               }
               style={
-                entry.modalAspect
-                  ? { aspectRatio: entry.modalAspect.replace("/", " / ") }
+                entry.modal_aspect
+                  ? { aspectRatio: entry.modal_aspect.replace("/", " / ") }
                   : undefined
               }
             >
-              {entry.modalPhoto || entry.photo ? (
+              {entry.modal_photo_url || entry.photo_url ? (
                 <img
-                  src={entry.modalPhoto || entry.photo}
+                  src={entry.modal_photo_url || entry.photo_url || undefined}
                   alt={entry.name}
                   className="w-full h-full object-cover object-top"
                 />
@@ -225,7 +202,7 @@ const MemberDialog = ({
               <p className="text-primary text-xs uppercase tracking-widest font-semibold">
                 {entry.title}
               </p>
-              {collab && (
+              {collab && collab.business && (
                 <p className="text-sm text-muted-foreground mt-1.5">
                   {collab.business}
                 </p>
@@ -306,28 +283,61 @@ const MemberDialog = ({
 /* ---------------- Page ---------------- */
 
 const Team = () => {
+  const [members, setMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>("All");
-  const [active, setActive] = useState<Entry | null>(null);
+  const [active, setActive] = useState<TeamMember | null>(null);
   const { hash } = useLocation();
 
-  // Open modal from URL hash on mount / hash change
+  useEffect(() => {
+    const fetchMembers = async () => {
+      const { data, error } = await supabase
+        .from("team_members")
+        .select("*")
+        .order("display_order", { ascending: true })
+        .order("name", { ascending: true });
+
+      if (!error && data) {
+        setMembers(data as TeamMember[]);
+      }
+      setLoading(false);
+    };
+
+    fetchMembers();
+
+    // Keep the page in sync with admin edits without a manual refresh.
+    const channel = supabase
+      .channel("team-members-changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "team_members" },
+        () => fetchMembers()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  // Open modal from URL hash once members are loaded / hash changes.
   useEffect(() => {
     const slug = decodeURIComponent((hash || "").slice(1));
-    if (!slug) return;
-    const found = ALL_MEMBERS.find((m) => teamSlug(m.name) === slug);
+    if (!slug || members.length === 0) return;
+    const found = members.find((m) => teamSlug(m.name) === slug);
     if (found) {
       setActive(found);
-      // Make sure the filter doesn't hide the source card behind the modal
       setFilter("All");
-      // Reset scroll position so the modal opens against a clean top-of-page
-      // background, not partway down (carries over from previous page scroll).
       window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
     }
-  }, [hash]);
+  }, [hash, members]);
 
   const filtered = useMemo(
-    () => (filter === "All" ? ALL_MEMBERS : ALL_MEMBERS.filter((m) => m.group === filter)),
-    [filter],
+    () =>
+      filter === "All"
+        ? members
+        : members.filter((m) => CATEGORY_LABEL[m.category] === filter),
+    [filter, members],
   );
 
   return (
@@ -354,16 +364,22 @@ const Team = () => {
           <div className="container mx-auto px-4 max-w-7xl">
             <FilterPills active={filter} onChange={setFilter} />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filtered.map((m) => (
-                <Card key={m.name} entry={m} onOpen={() => setActive(m)} />
-              ))}
-            </div>
+            {loading ? (
+              <p className="text-center text-muted-foreground py-12">Loading team…</p>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {filtered.map((m) => (
+                    <Card key={m.id} entry={m} onOpen={() => setActive(m)} />
+                  ))}
+                </div>
 
-            {filtered.length === 0 && (
-              <p className="text-center text-muted-foreground py-12">
-                No members in this category.
-              </p>
+                {filtered.length === 0 && (
+                  <p className="text-center text-muted-foreground py-12">
+                    No members in this category.
+                  </p>
+                )}
+              </>
             )}
           </div>
         </section>
