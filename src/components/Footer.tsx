@@ -42,6 +42,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/resources" className="text-secondary-foreground/80 hover:text-primary transition-colors">
+                  Resources
+                </Link>
+              </li>
+              <li>
                 <a href="/#treatments" className="text-secondary-foreground/80 hover:text-primary transition-colors">
                   Covered Services
                 </a>

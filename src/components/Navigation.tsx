@@ -97,6 +97,7 @@ const Navigation = () => {
     { name: "Home", path: "/" },
     { name: "About", path: "/#about" },
     { name: "Team", path: "/team" },
+    { name: "Resources", path: "/resources" },
   ];
 
   const navLinkClass = (path: string) =>
