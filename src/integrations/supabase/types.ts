@@ -212,6 +212,39 @@ export type Database = {
         }
         Relationships: []
       }
+      service_reviews: {
+        Row: {
+          created_at: string | null
+          display_order: number
+          id: string
+          is_published: boolean
+          patient_name: string | null
+          quote: string
+          treatment_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          display_order?: number
+          id?: string
+          is_published?: boolean
+          patient_name?: string | null
+          quote: string
+          treatment_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          display_order?: number
+          id?: string
+          is_published?: boolean
+          patient_name?: string | null
+          quote?: string
+          treatment_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       team_members: {
         Row: {
           address: string | null

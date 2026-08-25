@@ -10,7 +10,10 @@ import TreatmentForm from "@/components/admin/TreatmentForm";
 import BatchIconGenerator from "@/components/admin/BatchIconGenerator";
 import TeamList from "@/components/admin/TeamList";
 import TeamForm from "@/components/admin/TeamForm";
+import ReviewsList from "@/components/admin/ReviewsList";
+import ReviewForm from "@/components/admin/ReviewForm";
 import type { TeamMember } from "@/types/team";
+import type { ServiceReview } from "@/types/review";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -27,6 +30,11 @@ const Admin = () => {
   const [showTeamForm, setShowTeamForm] = useState(false);
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
   const [teamRefreshKey, setTeamRefreshKey] = useState(0);
+
+  // Reviews section state
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [editingReview, setEditingReview] = useState<ServiceReview | null>(null);
+  const [reviewRefreshKey, setReviewRefreshKey] = useState(0);
 
   useEffect(() => {
     checkAdminStatus();
@@ -98,6 +106,21 @@ const Admin = () => {
     setTeamRefreshKey((prev) => prev + 1);
   };
 
+  // Review handlers
+  const handleEditReview = (review: ServiceReview) => {
+    setEditingReview(review);
+    setShowReviewForm(true);
+  };
+
+  const handleReviewFormClose = () => {
+    setShowReviewForm(false);
+    setEditingReview(null);
+  };
+
+  const handleReviewSave = () => {
+    setReviewRefreshKey((prev) => prev + 1);
+  };
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
@@ -128,6 +151,7 @@ const Admin = () => {
           <TabsList>
             <TabsTrigger value="treatments">Treatments</TabsTrigger>
             <TabsTrigger value="team">Team</TabsTrigger>
+            <TabsTrigger value="reviews">Reviews</TabsTrigger>
           </TabsList>
 
           {/* Treatments */}
@@ -175,6 +199,26 @@ const Admin = () => {
                   </Button>
                 </div>
                 <TeamList key={teamRefreshKey} onEdit={handleEditMember} />
+              </>
+            )}
+          </TabsContent>
+
+          {/* Reviews */}
+          <TabsContent value="reviews">
+            {showReviewForm ? (
+              <ReviewForm
+                review={editingReview}
+                onClose={handleReviewFormClose}
+                onSave={handleReviewSave}
+              />
+            ) : (
+              <>
+                <div className="mb-6 flex gap-2">
+                  <Button onClick={() => setShowReviewForm(true)}>
+                    Add Review
+                  </Button>
+                </div>
+                <ReviewsList key={reviewRefreshKey} onEdit={handleEditReview} />
               </>
             )}
           </TabsContent>

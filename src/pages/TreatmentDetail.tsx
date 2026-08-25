@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Download } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buildDownloadFilename, downloadPdf } from "@/lib/downloadPdf";
+import ServiceReviews from "@/components/ServiceReviews";
 
 interface Treatment {
   id: string;
@@ -167,6 +168,9 @@ const TreatmentDetail = () => {
             </div>
           </div>
         </section>
+
+        {/* Patient Reviews (renders nothing when this service has none published) */}
+        <ServiceReviews treatmentId={treatment.id} />
 
         {/* Back to Home Button */}
         <section className="py-8">
