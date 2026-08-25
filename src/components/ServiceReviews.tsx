@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Quote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { quoteParagraphs, type ServiceReview } from "@/types/review";
@@ -14,6 +15,7 @@ interface ServiceReviewsProps {
  */
 const ServiceReviews = ({ treatmentId }: ServiceReviewsProps) => {
   const [reviews, setReviews] = useState<ServiceReview[]>([]);
+  const { hash } = useLocation();
 
   useEffect(() => {
     if (!treatmentId) return;
@@ -40,10 +42,34 @@ const ServiceReviews = ({ treatmentId }: ServiceReviewsProps) => {
     };
   }, [treatmentId]);
 
+  // Scroll here when arriving via /treatment/<slug>#reviews. The section only
+  // exists once the reviews have loaded — two chained requests behind the page
+  // load — which is usually too late for the global hash handler's retry
+  // window, so it re-runs the scroll itself once the content is on screen.
+  useEffect(() => {
+    if (hash !== "#reviews" || reviews.length === 0) return;
+
+    const scroll = (behavior: ScrollBehavior) =>
+      document.getElementById("reviews")?.scrollIntoView({ behavior, block: "start" });
+
+    const raf = requestAnimationFrame(() => scroll("smooth"));
+    // Re-align instantly after late layout shifts (images finishing, reveal
+    // animations expanding), which also guarantees we land even where smooth
+    // scrolling is unavailable.
+    const timers = [500, 1000].map((ms) =>
+      window.setTimeout(() => scroll("auto"), ms)
+    );
+
+    return () => {
+      cancelAnimationFrame(raf);
+      timers.forEach(clearTimeout);
+    };
+  }, [hash, reviews.length]);
+
   if (reviews.length === 0) return null;
 
   return (
-    <section className="py-12 bg-secondary/5">
+    <section id="reviews" className="py-12 bg-secondary/5 scroll-mt-24">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">

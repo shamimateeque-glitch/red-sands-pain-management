@@ -123,7 +123,6 @@ const PrivatePaySection = () => {
                 <CardDescription className="text-base">{service.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <ReviewHighlight highlight={reviewHighlights.get(service.id)} />
                 {(() => {
                   const hasTwoPdfs = !!service.pdf_url && !!service.pdf_url_2;
                   const learnMoreBtn = service.slug && service.content && (
@@ -193,6 +192,10 @@ const PrivatePaySection = () => {
                     </div>
                   );
                 })()}
+                <ReviewHighlight
+                  highlight={reviewHighlights.get(service.id)}
+                  href={service.slug ? `/treatment/${service.slug}#reviews` : undefined}
+                />
               </CardContent>
             </Card>
           ))}

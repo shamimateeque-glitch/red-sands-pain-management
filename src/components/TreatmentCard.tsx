@@ -46,7 +46,6 @@ const TreatmentCard = ({ title, description, icon, slug, pdfUrl, iconSvgUrl, ico
         <CardDescription className="text-base">{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ReviewHighlight highlight={reviewHighlight} />
         <div className="flex flex-col sm:flex-row gap-2">
           <Button variant="ghost" asChild className="group flex-1 transition-all hover:bg-secondary hover:text-white">
             <Link to={`/treatment/${slug}`} className="flex items-center gap-2">
@@ -66,6 +65,10 @@ const TreatmentCard = ({ title, description, icon, slug, pdfUrl, iconSvgUrl, ico
             </Button>
           )}
         </div>
+        <ReviewHighlight
+          highlight={reviewHighlight}
+          href={`/treatment/${slug}#reviews`}
+        />
       </CardContent>
     </Card>
   );
