@@ -30,8 +30,8 @@ const RESOURCES: Resource[] = [
   },
   {
     title: "Beck Exercise Physiology Inc",
-    url: "https://www.beckexercisephysiology.ca",
-    display: "beckexercisephysiology.ca",
+    url: "https://www.beckexercisephysiology.com",
+    display: "www.beckexercisephysiology.com",
   },
   {
     title: "Pain BC",
