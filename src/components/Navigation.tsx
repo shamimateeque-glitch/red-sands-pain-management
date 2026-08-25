@@ -97,7 +97,6 @@ const Navigation = () => {
     { name: "Home", path: "/" },
     { name: "About", path: "/#about" },
     { name: "Team", path: "/team" },
-    { name: "Resources", path: "/resources" },
   ];
 
   const navLinkClass = (path: string) =>
@@ -205,6 +204,15 @@ const Navigation = () => {
                 </Link>
               </div>
             </div>
+            <a
+              href="/resources"
+              className={navLinkClass("/resources")}
+            >
+              Resources
+              {isActive("/resources") && (
+                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full" />
+              )}
+            </a>
             <a
               href="/#contact"
               className={navLinkClass("/#contact")}
@@ -325,6 +333,15 @@ const Navigation = () => {
                 </div>
               </div>
             </div>
+            <a
+              href="/resources"
+              className={`block py-2.5 px-3 rounded-lg text-sm font-medium tracking-wide transition-colors ${
+                isActive("/resources") ? "text-primary bg-primary/5" : "text-foreground hover:text-primary hover:bg-muted/60"
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              Resources
+            </a>
             <a
               href="/#contact"
               className="block py-2.5 px-3 rounded-lg text-sm font-medium tracking-wide text-foreground hover:text-primary hover:bg-muted/60 transition-colors"
