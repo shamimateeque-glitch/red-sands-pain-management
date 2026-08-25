@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TreatmentCard from "./TreatmentCard";
 import { supabase } from "@/integrations/supabase/client";
 import * as Icons from "lucide-react";
+import { useReviewHighlights } from "@/hooks/useReviewHighlights";
 
 interface Treatment {
   id: string;
@@ -18,6 +19,7 @@ interface Treatment {
 const TreatmentsSection = () => {
   const [treatments, setTreatments] = useState<Treatment[]>([]);
   const [loading, setLoading] = useState(true);
+  const reviewHighlights = useReviewHighlights();
 
   useEffect(() => {
     fetchTreatments();
@@ -95,6 +97,7 @@ const TreatmentsSection = () => {
               imageUrl={treatment.image_url}
               iconBackground={treatment.icon_background}
               iconSvgUrl={treatment.icon_svg_url}
+              reviewHighlight={reviewHighlights.get(treatment.id)}
             />
           ))}
         </div>

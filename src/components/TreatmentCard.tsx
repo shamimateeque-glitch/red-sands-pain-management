@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowRight, Download } from "lucide-react";
 import { buildDownloadFilename, downloadPdf } from "@/lib/downloadPdf";
+import ReviewHighlight from "@/components/ReviewHighlight";
+import type { ReviewHighlightData } from "@/hooks/useReviewHighlights";
 
 interface TreatmentCardProps {
   title: string;
@@ -13,9 +15,11 @@ interface TreatmentCardProps {
   imageUrl?: string;
   iconBackground?: string;
   iconSvgUrl?: string;
+  /** Short patient-review teaser, when this service has a published review. */
+  reviewHighlight?: ReviewHighlightData;
 }
 
-const TreatmentCard = ({ title, description, icon, slug, pdfUrl, iconSvgUrl, iconBackground }: TreatmentCardProps) => {
+const TreatmentCard = ({ title, description, icon, slug, pdfUrl, iconSvgUrl, iconBackground, reviewHighlight }: TreatmentCardProps) => {
   const handleDownloadPDF = (url: string) =>
     downloadPdf(url, buildDownloadFilename(title));
 
@@ -42,6 +46,7 @@ const TreatmentCard = ({ title, description, icon, slug, pdfUrl, iconSvgUrl, ico
         <CardDescription className="text-base">{description}</CardDescription>
       </CardHeader>
       <CardContent>
+        <ReviewHighlight highlight={reviewHighlight} />
         <div className="flex flex-col sm:flex-row gap-2">
           <Button variant="ghost" asChild className="group flex-1 transition-all hover:bg-secondary hover:text-white">
             <Link to={`/treatment/${slug}`} className="flex items-center gap-2">

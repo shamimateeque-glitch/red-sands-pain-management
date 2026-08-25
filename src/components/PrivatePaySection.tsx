@@ -6,6 +6,8 @@ import { ArrowRight, Download, ExternalLink } from "lucide-react";
 import * as Icons from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { buildDownloadFilename, downloadPdf } from "@/lib/downloadPdf";
+import ReviewHighlight from "@/components/ReviewHighlight";
+import { useReviewHighlights } from "@/hooks/useReviewHighlights";
 
 interface PrivatePayService {
   id: string;
@@ -28,6 +30,7 @@ interface PrivatePayService {
 const PrivatePaySection = () => {
   const [services, setServices] = useState<PrivatePayService[]>([]);
   const [loading, setLoading] = useState(true);
+  const reviewHighlights = useReviewHighlights();
 
   useEffect(() => {
     fetchServices();
@@ -120,6 +123,7 @@ const PrivatePaySection = () => {
                 <CardDescription className="text-base">{service.description}</CardDescription>
               </CardHeader>
               <CardContent>
+                <ReviewHighlight highlight={reviewHighlights.get(service.id)} />
                 {(() => {
                   const hasTwoPdfs = !!service.pdf_url && !!service.pdf_url_2;
                   const learnMoreBtn = service.slug && service.content && (
